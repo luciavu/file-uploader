@@ -13,7 +13,6 @@ passport.use(
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
-
       const match = validatePassword(password, user.password);
 
       if (!match) {

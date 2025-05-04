@@ -5,7 +5,6 @@ export const genPassword = (password: string) => {
   const hash = bcrypt.hashSync(password, salt);
   return {
     hash,
-    salt,
   };
 };
 
