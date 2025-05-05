@@ -8,6 +8,7 @@ import passport from 'passport';
 import helmet from 'helmet';
 import indexRouter from './routes/index';
 import authRouter from './routes/auth';
+import uploadRouter from './routes/upload';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import { PrismaClient } from '@prisma/client';
 
@@ -54,6 +55,7 @@ app.use((req, res, next) => {
 // Routes
 app.use(indexRouter);
 app.use(authRouter);
+app.use(uploadRouter);
 
 // Error
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {

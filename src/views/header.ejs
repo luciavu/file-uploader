@@ -1,0 +1,13 @@
+<div class="header">
+  <div class="logo">
+    <div class="github">
+      <a href="https://github.com/luciavu/file-uploader" target="_blank"
+        ><i class="fab fa-github"></i
+      ></a>
+    </div>
+    <h2><a href=<%= user ? "/home" : "/"%>>Odin Drive</a></h2>
+  </div>
+  <%if (user){%>
+  <p><a href="/logout" class="logout">Logout</a></p>
+  <%}%>
+</div>

@@ -8,4 +8,119 @@
 body {
   margin: 0;
   padding: 0;
+  padding: 1.5rem 2.5rem;
+}
+
+.github i {
+  font-size: 2.5rem;
+  color: var(--text-focus);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+h1 {
+  font-size: 3rem;
+}
+
+h2,
+h2 a {
+  font-size: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.home {
+  margin-top: 2rem;
+  display: flex;
+  gap: 4rem;
+}
+
+.welcome-msg {
+  margin-bottom: 0.5rem;
+}
+
+.cta {
+  font-weight: 500;
+  color: rgb(132, 132, 132);
+}
+.nav {
+  display: flex;
+  flex-direction: column;
+  width: 18%;
+  gap: 0.2rem;
+}
+
+.nav a {
+  padding: 0.4rem 1rem;
+}
+
+.nav .new {
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  border-radius: 2rem;
+  border: 0.1rem solid black;
+  margin: 0.5rem 0;
+  width: max-content;
+  padding: 0.6rem 1.8rem;
+}
+
+.folders {
+  margin-top: 0.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.files-wrapper {
+  width: 82%;
+}
+
+.files {
+  margin-top: 1rem;
+  border: 0.1rem solid black;
+  padding: 1.5rem;
+}
+
+.nav h3 {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.file,
+.file-headings {
+  padding: 0.8rem 1rem;
+  border: 0.1rem solid black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.file-headings {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  border: none;
+}
+
+.file-row {
+  display: grid;
+  grid-template-columns: 3fr 2fr 2fr 1fr 2fr;
+  align-items: center;
+  gap: 1rem;
 }

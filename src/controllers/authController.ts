@@ -20,7 +20,7 @@ const validateUser = [
 
 export const postLogin = passport.authenticate('local', {
   failureRedirect: '/login',
-  successRedirect: '/',
+  successRedirect: '/home',
 });
 
 export const postRegister = [
@@ -46,7 +46,7 @@ export const postRegister = [
       const { hash } = genPassword(password);
       // Insert new user into database
       await prisma.user.create({ data: { username: req.body.username, password: hash } });
-      res.redirect('/login');
+      res.redirect('/');
     } catch (err) {
       console.error(err);
       next(err);
@@ -63,10 +63,10 @@ export const getLogout = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-export const getLogin = (req: Request, res: Response) => {
-  res.render('login');
-};
-
 export const getRegister = (req: Request, res: Response) => {
   res.render('register');
+};
+
+export const getHome = (req: Request, res: Response) => {
+  res.render('home');
 };
