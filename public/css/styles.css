@@ -140,9 +140,13 @@ a {
   border: none;
 }
 
+.file-link {
+  display: block;
+}
+
 .file-row {
   display: grid;
-  grid-template-columns: 3fr 1.5fr 2fr 1fr;
+  grid-template-columns: 3fr 1fr 2fr 1fr;
   gap: 1rem;
 }
 
@@ -173,4 +177,29 @@ a {
 .actions {
   display: flex;
   gap: 1rem;
+}
+
+.details {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.key {
+  font-weight: 600;
+}
+.value {
+  color: rgb(55, 55, 55);
+}
+
+.back {
+  display: block;
+  margin-bottom: 2rem;
+  text-decoration: underline;
 }

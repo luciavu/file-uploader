@@ -15,8 +15,8 @@ export const getNewFolder = (req: Request, res: Response) => {
 
 export const getAllFolders = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const files = await prisma.folder.findMany({ include: { files: true } });
-    res.render('home', { section: 'Folders', folder: null, files: files });
+    const files = await prisma.folder.findMany();
+    res.render('home', { section: 'Folders', folder: null, files: files, download: false });
   } catch (err) {
     console.error(err);
     next(err);
@@ -28,10 +28,11 @@ export const getFolder = async (req: Request, res: Response, next: NextFunction)
     const { folderId } = req.params;
     const folder = await prisma.folder.findUnique({ where: { id: Number(folderId) } });
     const files = await prisma.file.findMany({ where: { folderId: Number(folderId) } });
+
     if (!folder) {
       return res.status(404).send('Folder not found');
     }
-    res.render('home', { folder: folder, files: files });
+    res.render('home', { folder: folder, files: files, download: true });
   } catch (err) {
     console.error(err);
     next(err);
@@ -55,9 +56,9 @@ export const getUpdateFolder = async (req: Request, res: Response, next: NextFun
 
 export const getDeleteFolder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { folderId } = req.params;
-    const folder = await prisma.folder.findUnique({ where: { id: Number(folderId) } });
-    res.render('delete', { type: 'folder', folderId, name: folder.name });
+    const { id } = req.params;
+    const folder = await prisma.folder.findUnique({ where: { id: Number(id) } });
+    res.render('delete', { type: 'folder', id, name: folder.name });
   } catch (err) {
     console.error(err);
     next(err);
@@ -86,18 +87,17 @@ export const postUpdateFolder = async (req: Request, res: Response, next: NextFu
 
 export const postDeleteFolder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { folderId } = req.params;
-    const folderIdNum = Number(folderId);
+    const { id } = req.params;
 
     // Delete related files first, then delete folder
     const deleteFiles = await prisma.file.deleteMany({
       where: {
-        folderId: folderIdNum,
+        folderId: Number(id),
       },
     });
 
     const deleteFolder = await prisma.folder.delete({
-      where: { id: folderIdNum },
+      where: { id: Number(id) },
     });
 
     res.redirect('/home');

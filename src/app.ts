@@ -8,7 +8,7 @@ import passport from 'passport';
 import helmet from 'helmet';
 import indexRouter from './routes/index';
 import authRouter from './routes/auth';
-import uploadRouter from './routes/upload';
+import fileRouter from './routes/file';
 import folderRouter from './routes/folder';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import { PrismaClient } from '@prisma/client';
@@ -71,7 +71,7 @@ app.use(async (req, res, next) => {
 // Routes
 app.use(indexRouter);
 app.use(authRouter);
-app.use(uploadRouter);
+app.use(fileRouter);
 app.use(folderRouter);
 
 // Error

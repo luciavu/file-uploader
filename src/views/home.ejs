@@ -36,15 +36,21 @@
         <div class="heading">Actions</div>
       </div>
       <%files.forEach((file) => {%>
-      <a href="/folders/<%=file.id%>" class="file-link">
+      <div class="file-link">
         <div class="file file-row">
-          <div class="name"><%=file.name%></div>
+          <a class="name" href="<%= download ? '/details/' + file.id : '/folders/' + file.id%>"
+            ><%=file.name%></a
+          >
           <div class="owner"><%=user.username%></div>
           <div class="date-uploaded"><%=file.createdAt.toISOString().split('T')[0]%></div>
           <div class="actions">
-            <i class="fas fa-download"></i><i class="fas fa-trash"></i>
-          </div></div
-      ></a>
+            <%if (download) {%>
+            <a href="/"><i class="fas fa-download"></i></a>
+            <%}%>
+            <a href="/delete/<%=file.id%>"><i class="fas fa-trash"></i></a>
+          </div>
+        </div>
+      </div>
       <%})%>
     </div>
   </div>

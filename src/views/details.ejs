@@ -1,0 +1,24 @@
+<a href="/home" class="back">Back</a>
+<h1>File Details</h1>
+<div class="details">
+  <div class="field">
+    <div class="key">File Name:</div>
+    <div class="value"><%=file.name%></div>
+  </div>
+  <div class="field">
+    <div class="key">Upload time:</div>
+    <div class="value"><%=file.createdAt%></div>
+  </div>
+  <div class="field">
+    <div class="key">Owner:</div>
+    <div class="value"><%=user.username%></div>
+  </div>
+  <div class="field">
+    <div class="key">File size:</div>
+    <div class="value"><%=(file.size/(1024*1024)).toFixed(2)%> MB</div>
+  </div>
+  <div class="field">
+    <div class="key">Folder:</div>
+    <div class="value"><%=folder.name%></div>
+  </div>
+</div>
