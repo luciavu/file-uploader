@@ -142,8 +142,7 @@ a {
 
 .file-row {
   display: grid;
-  grid-template-columns: 3fr 2fr 2fr 1fr 2fr;
-  align-items: center;
+  grid-template-columns: 3fr 1.5fr 2fr 1fr;
   gap: 1rem;
 }
 
@@ -169,4 +168,9 @@ a {
 .folders i {
   margin-right: 0.5rem;
   color: rgb(205, 204, 202);
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
 }

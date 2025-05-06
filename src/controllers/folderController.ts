@@ -14,18 +14,24 @@ export const getNewFolder = (req: Request, res: Response) => {
 };
 
 export const getAllFolders = async (req: Request, res: Response, next: NextFunction) => {
-  res.render('home', { section: 'Folders', folder: null });
+  try {
+    const files = await prisma.folder.findMany({ include: { files: true } });
+    res.render('home', { section: 'Folders', folder: null, files: files });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 };
 
 export const getFolder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { folderId } = req.params;
     const folder = await prisma.folder.findUnique({ where: { id: Number(folderId) } });
-
+    const files = await prisma.file.findMany({ where: { folderId: Number(folderId) } });
     if (!folder) {
       return res.status(404).send('Folder not found');
     }
-    res.render('home', { folder: folder });
+    res.render('home', { folder: folder, files: files });
   } catch (err) {
     console.error(err);
     next(err);

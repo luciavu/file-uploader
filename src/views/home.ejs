@@ -33,27 +33,19 @@
         <div class="heading">Name</div>
         <div class="heading">Owner</div>
         <div class="heading">Created</div>
-        <div class="heading">Size</div>
         <div class="heading">Actions</div>
       </div>
-      <a href="" class="file-link">
+      <%files.forEach((file) => {%>
+      <a href="/folders/<%=file.id%>" class="file-link">
         <div class="file file-row">
-          <div class="name">File name</div>
-          <div class="owner">sss</div>
-          <div class="date-uploaded">27th May</div>
-          <div class="file-size">27mB</div>
-          <div class="actions">Down Del</div>
-        </div></a
-      >
-      <a href="" class="file-link">
-        <div class="file file-row">
-          <div class="name">File name</div>
-          <div class="owner">sss</div>
-          <div class="date-uploaded">27th May</div>
-          <div class="file-size">27mB</div>
-          <div class="actions">Down Del</div>
-        </div></a
-      >
+          <div class="name"><%=file.name%></div>
+          <div class="owner"><%=user.username%></div>
+          <div class="date-uploaded"><%=file.createdAt.toISOString().split('T')[0]%></div>
+          <div class="actions">
+            <i class="fas fa-download"></i><i class="fas fa-trash"></i>
+          </div></div
+      ></a>
+      <%})%>
     </div>
   </div>
 </div>

@@ -67,6 +67,12 @@ export const getRegister = (req: Request, res: Response) => {
   res.render('register');
 };
 
-export const getHome = async (req: Request, res: Response) => {
-  res.render('home', { folder: null, section: 'Home' });
+export const getHome = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const files = await prisma.file.findMany();
+    res.render('home', { section: 'Home', folder: null, files: files });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 };
