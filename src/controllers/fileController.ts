@@ -1,5 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import path from 'path';
 const prisma = new PrismaClient();
 
 export const getUploadFile = (req: Request, res: Response) => {
@@ -25,6 +26,24 @@ export const getDetailsFile = async (req: Request, res: Response, next: NextFunc
     });
     const folder = await prisma.folder.findUnique({ where: { id: file.folderId } });
     res.render('details', { file, folder });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+export const getDownloadFile = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const file = await prisma.file.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!file) {
+      return res.status(404).send('File not found.');
+    }
+    const filePath = path.join(__dirname, '../../uploads', file.name);
+    res.download(filePath, file.name);
   } catch (err) {
     console.error(err);
     next(err);
