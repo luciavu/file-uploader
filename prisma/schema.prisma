@@ -12,6 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Session {
@@ -33,6 +34,7 @@ model User {
 model File {
   id Int @id @default(autoincrement())
   name String
+  originalName String
   owner String
   size Int
   createdAt DateTime @default(now())

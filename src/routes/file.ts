@@ -11,12 +11,7 @@ import multer from 'multer';
 import isAuth from '../middleware/authMiddleware';
 
 const fileRouter = Router();
-const storage = multer.diskStorage({
-  destination: 'uploads/',
-  filename: (req, file, cb) => {
-    cb(null, `${file.originalname}`);
-  },
-});
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Get Routes

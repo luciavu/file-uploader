@@ -39,7 +39,7 @@
       <div class="file-link">
         <div class="file file-row">
           <a class="name" href="<%= download ? '/details/' + file.id : '/folders/' + file.id%>"
-            ><%=file.name%></a
+            ><%= download ? file.originalName : file.name%></a
           >
           <div class="owner"><%=user.username%></div>
           <div class="date-uploaded"><%=file.createdAt.toISOString().split('T')[0]%></div>

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { body, validationResult } from 'express-validator';
 const prisma = new PrismaClient();
+import supabase from '../lib/supabaseClient';
 
 const lengthErr = 'must be between 3 and 15 characters.';
 
@@ -77,7 +78,6 @@ export const postUpdateFolder = async (req: Request, res: Response, next: NextFu
         name: newName,
       },
     });
-    console.log(updateFolder);
     res.redirect('/home');
   } catch (err) {
     console.error(err);
@@ -88,8 +88,23 @@ export const postUpdateFolder = async (req: Request, res: Response, next: NextFu
 export const postDeleteFolder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const files = await prisma.file.findMany({
+      where: {
+        folderId: Number(id),
+      },
+      select: {
+        name: true,
+      },
+    });
 
-    // Delete related files first, then delete folder
+    // Delete files from supabase storage
+    const fileNames = files.map((file: { name: string }) => file.name);
+    if (fileNames.length > 0) {
+      const { data, error } = await supabase.storage.from('files').remove(fileNames);
+      if (error) throw error;
+    }
+
+    // Delete files first, then delete folder
     const deleteFiles = await prisma.file.deleteMany({
       where: {
         folderId: Number(id),
