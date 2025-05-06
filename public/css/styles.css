@@ -60,6 +60,7 @@ a {
   font-weight: 500;
   color: rgb(132, 132, 132);
 }
+
 .nav {
   display: flex;
   flex-direction: column;
@@ -67,25 +68,46 @@ a {
   gap: 0.2rem;
 }
 
+.flex-col {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
 .nav a {
   padding: 0.4rem 1rem;
 }
 
-.nav .new {
+.upload {
   background-color: black;
   color: white;
   font-weight: 600;
   border-radius: 2rem;
   border: 0.1rem solid black;
-  margin: 0.5rem 0;
   width: max-content;
-  padding: 0.6rem 1.8rem;
+  padding: 0.6rem 1rem;
+}
+
+.upload-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+.upload i {
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
 }
 
 .folders {
   margin-top: 0.2rem;
   display: flex;
   flex-direction: column;
+}
+
+.folder-name {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .files-wrapper {
@@ -123,4 +145,28 @@ a {
   grid-template-columns: 3fr 2fr 2fr 1fr 2fr;
   align-items: center;
   gap: 1rem;
+}
+
+.delete-form h3 {
+  color: red;
+  margin-top: 1rem;
+}
+
+.delete-form button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background-color: black;
+  color: white;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+#delete {
+  background-color: red;
+}
+
+.folders i {
+  margin-right: 0.5rem;
+  color: rgb(205, 204, 202);
 }

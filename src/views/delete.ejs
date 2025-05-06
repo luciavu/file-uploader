@@ -1,0 +1,13 @@
+<form
+  action="<%= type === 'folder' ? '/folders/delete/' + folderId : '/files/delete/' + fileId%>"
+  method="post"
+  class="delete-form"
+>
+  <h2>Are you certain you want to delete <%=name%>?</h2>
+  <% if (type === 'folder') {%>
+  <h3>Deleting this folder will delete all the files inside of it.</h3>
+  <%}%>
+
+  <button><a href="/home">Go back</a></button>
+  <button type="submit" id="delete">Delete</button>
+</form>

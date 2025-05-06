@@ -1,0 +1,7 @@
+<%- include("./partials/errors.ejs") %>
+<form action="/folders/new" method="post">
+  <label for="foldername"
+    >Folder name:<input type="text" id="foldername" name="foldername" minlength="3" maxlength="15"
+  /></label>
+  <button type="submit">Add folder</button>
+</form>

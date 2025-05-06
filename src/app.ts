@@ -9,6 +9,7 @@ import helmet from 'helmet';
 import indexRouter from './routes/index';
 import authRouter from './routes/auth';
 import uploadRouter from './routes/upload';
+import folderRouter from './routes/folder';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import { PrismaClient } from '@prisma/client';
 
@@ -47,8 +48,23 @@ require('./config/passport');
 app.use(passport.session());
 app.use((req, res, next) => {
   res.locals.user = req.user;
-  console.log(req.session);
-  console.log(req.user);
+  //console.log(req.session);
+  //console.log(req.user);
+  next();
+});
+
+// Folders
+app.use(async (req, res, next) => {
+  if (req.user) {
+    const folders = await prisma.folder.findMany({
+      orderBy: {
+        id: 'asc',
+      },
+    });
+    res.locals.folders = folders;
+  } else {
+    res.locals.folders = [];
+  }
   next();
 });
 
@@ -56,6 +72,7 @@ app.use((req, res, next) => {
 app.use(indexRouter);
 app.use(authRouter);
 app.use(uploadRouter);
+app.use(folderRouter);
 
 // Error
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {

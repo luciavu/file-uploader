@@ -67,6 +67,6 @@ export const getRegister = (req: Request, res: Response) => {
   res.render('register');
 };
 
-export const getHome = (req: Request, res: Response) => {
-  res.render('home');
+export const getHome = async (req: Request, res: Response) => {
+  res.render('home', { folder: null, section: 'Home' });
 };
