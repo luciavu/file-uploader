@@ -16,8 +16,13 @@ export const getNewFolder = (req: Request, res: Response) => {
 
 export const getAllFolders = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const files = await prisma.folder.findMany();
-    res.render('home', { section: 'Folders', folder: null, files: files, download: false });
+    const files = await prisma.folder.findMany({ where: { userId: req.user.id } });
+    res.render('home', {
+      section: 'Folders',
+      folder: null,
+      files: files,
+      download: false,
+    });
   } catch (err) {
     console.error(err);
     next(err);
@@ -27,12 +32,17 @@ export const getAllFolders = async (req: Request, res: Response, next: NextFunct
 export const getFolder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { folderId } = req.params;
-    const folder = await prisma.folder.findUnique({ where: { id: Number(folderId) } });
-    const files = await prisma.file.findMany({ where: { folderId: Number(folderId) } });
+    const folder = await prisma.folder.findFirst({
+      where: { id: Number(folderId), userId: req.user.id },
+    });
 
     if (!folder) {
-      return res.status(404).send('Folder not found');
+      return res.status(404).render('unauthorised', { message: 'Folder not found' });
     }
+    const files = await prisma.file.findMany({
+      where: { folderId: Number(folderId), userId: req.user.id },
+    });
+
     res.render('home', { folder: folder, files: files, download: true });
   } catch (err) {
     console.error(err);
@@ -43,10 +53,12 @@ export const getFolder = async (req: Request, res: Response, next: NextFunction)
 export const getUpdateFolder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { folderId } = req.params;
-    const folder = await prisma.folder.findUnique({ where: { id: Number(folderId) } });
+    const folder = await prisma.folder.findFirst({
+      where: { id: Number(folderId), userId: req.user.id },
+    });
 
     if (!folder) {
-      return res.status(404).send('Folder not found');
+      return res.status(404).render('unauthorised', { message: 'Folder not found' });
     }
     res.render('update-folder', { folder });
   } catch (err) {
@@ -58,7 +70,13 @@ export const getUpdateFolder = async (req: Request, res: Response, next: NextFun
 export const getDeleteFolder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const folder = await prisma.folder.findUnique({ where: { id: Number(id) } });
+    const folder = await prisma.folder.findFirst({
+      where: { id: Number(id), userId: req.user.id },
+    });
+    if (!folder) {
+      return res.status(404).render('unauthorised', { message: 'Folder not found' });
+    }
+
     res.render('delete', { type: 'folder', id, name: folder.name });
   } catch (err) {
     console.error(err);
@@ -70,10 +88,19 @@ export const postUpdateFolder = async (req: Request, res: Response, next: NextFu
   try {
     const { folderId } = req.params;
     const { newName } = req.body;
-    const updateFolder = await prisma.folder.update({
+    const folder = await prisma.folder.findFirst({
       where: {
         id: Number(folderId),
+        userId: req.user.id,
       },
+    });
+
+    if (!folder) {
+      return res.status(404).render('unauthorised', { message: 'Folder not found' });
+    }
+
+    await prisma.folder.update({
+      where: { id: folder.id },
       data: {
         name: newName,
       },
@@ -88,9 +115,19 @@ export const postUpdateFolder = async (req: Request, res: Response, next: NextFu
 export const postDeleteFolder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+
+    const folder = await prisma.folder.findFirst({
+      where: { id: Number(id), userId: req.user.id },
+    });
+
+    if (!folder) {
+      return res.status(404).render('unauthorised', { message: 'Folder not found' });
+    }
+
     const files = await prisma.file.findMany({
       where: {
         folderId: Number(id),
+        userId: req.user.id,
       },
       select: {
         name: true,
@@ -108,11 +145,12 @@ export const postDeleteFolder = async (req: Request, res: Response, next: NextFu
     const deleteFiles = await prisma.file.deleteMany({
       where: {
         folderId: Number(id),
+        userId: req.user.id,
       },
     });
 
     const deleteFolder = await prisma.folder.delete({
-      where: { id: Number(id) },
+      where: { id: folder.id },
     });
 
     res.redirect('/home');

@@ -11,7 +11,10 @@ export const getUploadFile = (req: Request, res: Response) => {
 export const getDeleteFile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const file = await prisma.file.findUnique({ where: { id: Number(id) } });
+    const file = await prisma.file.findFirst({ where: { id: Number(id), userId: req.user.id } });
+    if (!file) {
+      return res.status(404).render('unauthorised', { message: 'File not found' });
+    }
     res.render('delete', { type: 'file', id, name: file.name });
   } catch (err) {
     console.error(err);
@@ -22,9 +25,12 @@ export const getDeleteFile = async (req: Request, res: Response, next: NextFunct
 export const getDetailsFile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const file = await prisma.file.findUnique({
-      where: { id: Number(id) },
+    const file = await prisma.file.findFirst({
+      where: { id: Number(id), userId: req.user.id },
     });
+    if (!file) {
+      return res.status(404).render('unauthorised', { message: 'File not found' });
+    }
     const folder = await prisma.folder.findUnique({ where: { id: file.folderId } });
     res.render('details', { file, folder });
   } catch (err) {
@@ -36,12 +42,12 @@ export const getDetailsFile = async (req: Request, res: Response, next: NextFunc
 export const getDownloadFile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const file = await prisma.file.findUnique({
-      where: { id: Number(id) },
+    const file = await prisma.file.findFirst({
+      where: { id: Number(id), userId: req.user.id },
     });
 
     if (!file) {
-      return res.status(404).send('File not found.');
+      return res.status(404).render('unauthorised', { message: 'File not found' });
     }
 
     // Create link to download with 60s expiry
@@ -94,14 +100,16 @@ export const postUploadFile = async (req: Request, res: Response, next: NextFunc
 export const postDeleteFile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const deleteFile = await prisma.file.delete({
-      where: {
-        id: Number(id),
-      },
+    const file = await prisma.file.findFirst({
+      where: { id: Number(id), userId: req.user.id },
     });
+    if (!file) {
+      return res.status(404).render('unauthorised', { message: 'File not found' });
+    }
+    await prisma.file.delete({ where: { id: file.id } });
 
     // Remove from supabase storage
-    await supabase.storage.from('files').remove([deleteFile.name]);
+    await supabase.storage.from('files').remove([file.name]);
 
     res.redirect('/home');
   } catch (err) {

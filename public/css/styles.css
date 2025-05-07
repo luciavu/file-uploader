@@ -43,6 +43,7 @@
 
   .nav .folders {
     margin-top: 0.5rem;
+    flex-direction: row;
   }
 }
 
