@@ -1,5 +1,6 @@
 <%- include("./partials/errors.ejs") %>
-<form action="/folders/update/<%=folder.id%>" method="post">
+<form action="/folders/update/<%=folder.id%>" method="post" class="updatefolder">
+  <h1>Update folder</h1>
   <label for="newName"
     >Folder name:<input type="text" id="newName" name="newName" minlength="3" maxlength="15"
   /></label>

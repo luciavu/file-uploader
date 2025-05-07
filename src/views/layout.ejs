@@ -17,7 +17,7 @@
     <title>File Uploader</title>
   </head>
   <body>
-    <%-include('./header')%> <%-body%>
+    <%if(!hideHeader) {%> <%-include('./partials/header')%> <%}%><%-body%>
   </body>
   <footer></footer>
 </html>

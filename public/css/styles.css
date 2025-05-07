@@ -5,6 +5,47 @@
   color: var(--text-focus);
 }
 
+@media only screen and (max-width: 500px) {
+  body * {
+    font-size: 9px;
+  }
+  body .flex-col {
+    margin-top: 4rem;
+    flex-direction: column;
+    align-items: start;
+    gap: 2rem;
+  }
+
+  html body .home {
+    gap: 2rem;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  * {
+    font-size: 12px;
+  }
+
+  body .home {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  body .nav {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  body .files-wrapper {
+    width: 100%;
+  }
+
+  .nav .folders {
+    margin-top: 0.5rem;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -47,7 +88,7 @@ a {
 }
 
 .home {
-  margin-top: 2rem;
+  margin-top: 3rem;
   display: flex;
   gap: 4rem;
 }
@@ -75,7 +116,7 @@ a {
 }
 
 .nav a {
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 0.5rem;
 }
 
 .upload {
@@ -116,7 +157,7 @@ a {
 
 .files {
   margin-top: 1rem;
-  border: 0.1rem solid black;
+  box-shadow: 0 0.1rem 0.2rem 0 rgba(77, 77, 77, 0.2);
   padding: 1.5rem;
 }
 
@@ -128,7 +169,6 @@ a {
 .file,
 .file-headings {
   padding: 0.8rem 1rem;
-  border: 0.1rem solid black;
   display: flex;
   justify-content: space-between;
 }
@@ -138,6 +178,8 @@ a {
   justify-content: space-between;
   font-weight: 600;
   border: none;
+  border-bottom: 0.1rem solid black;
+  margin-bottom: 0.5rem;
 }
 
 .file-link {
@@ -146,7 +188,7 @@ a {
 
 .file-row {
   display: grid;
-  grid-template-columns: 3fr 1fr 2fr 1fr;
+  grid-template-columns: 3fr 2fr 2fr 1fr;
   gap: 1rem;
 }
 
@@ -202,4 +244,95 @@ a {
   display: block;
   margin-bottom: 2rem;
   text-decoration: underline;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+form button {
+  width: max-content;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  background-color: black;
+  color: white;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+
+.register {
+  margin-top: 3rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+input,
+select {
+  background-color: rgba(228, 228, 228, 0.591);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+input#file {
+  background-color: white;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 6rem;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+.login i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.login h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.login button {
+  margin: auto;
+  padding: 0.8rem 2rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.login a {
+  text-decoration: underline;
+}
+
+.uploadfile,
+.newfolder,
+.updatefolder {
+  display: flex;
+  align-items: start;
+}
+
+.form-buttons {
+  display: flex;
 }

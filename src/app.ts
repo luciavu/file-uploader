@@ -57,6 +57,9 @@ app.use((req, res, next) => {
 app.use(async (req, res, next) => {
   if (req.user) {
     const folders = await prisma.folder.findMany({
+      where: {
+        userId: req.user.id,
+      },
       orderBy: {
         id: 'asc',
       },
@@ -65,6 +68,11 @@ app.use(async (req, res, next) => {
   } else {
     res.locals.folders = [];
   }
+  next();
+});
+
+app.use((req, res, next) => {
+  res.locals.hideHeader = false;
   next();
 });
 
