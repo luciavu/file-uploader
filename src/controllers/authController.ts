@@ -69,7 +69,7 @@ export const getRegister = (req: Request, res: Response) => {
 
 export const getHome = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const files = await prisma.file.findMany({ where: { userId: req.user.id } });
+    const files = await prisma.file.findMany({ where: { userId: req.user!.id } });
     res.render('home', {
       section: 'Home',
       folder: null,

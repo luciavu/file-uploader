@@ -11,7 +11,7 @@ export const getUploadFile = (req: Request, res: Response) => {
 export const getDeleteFile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const file = await prisma.file.findFirst({ where: { id: Number(id), userId: req.user.id } });
+    const file = await prisma.file.findFirst({ where: { id: Number(id), userId: req.user!.id } });
     if (!file) {
       return res.status(404).render('unauthorised', { message: 'File not found' });
     }
@@ -26,7 +26,7 @@ export const getDetailsFile = async (req: Request, res: Response, next: NextFunc
   try {
     const { id } = req.params;
     const file = await prisma.file.findFirst({
-      where: { id: Number(id), userId: req.user.id },
+      where: { id: Number(id), userId: req.user!.id },
     });
     if (!file) {
       return res.status(404).render('unauthorised', { message: 'File not found' });
@@ -43,7 +43,7 @@ export const getDownloadFile = async (req: Request, res: Response, next: NextFun
   try {
     const { id } = req.params;
     const file = await prisma.file.findFirst({
-      where: { id: Number(id), userId: req.user.id },
+      where: { id: Number(id), userId: req.user!.id },
     });
 
     if (!file) {
@@ -84,10 +84,10 @@ export const postUploadFile = async (req: Request, res: Response, next: NextFunc
       data: {
         name: fileName,
         originalName: req.file.originalname,
-        owner: req.user.username,
+        owner: req.user!.username,
         size: req.file.size,
         folderId: Number(req.body.folder),
-        userId: req.user.id,
+        userId: req.user!.id,
       },
     });
     res.redirect('/home');
@@ -101,7 +101,7 @@ export const postDeleteFile = async (req: Request, res: Response, next: NextFunc
   try {
     const { id } = req.params;
     const file = await prisma.file.findFirst({
-      where: { id: Number(id), userId: req.user.id },
+      where: { id: Number(id), userId: req.user!.id },
     });
     if (!file) {
       return res.status(404).render('unauthorised', { message: 'File not found' });

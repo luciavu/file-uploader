@@ -16,7 +16,7 @@ export const getNewFolder = (req: Request, res: Response) => {
 
 export const getAllFolders = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const files = await prisma.folder.findMany({ where: { userId: req.user.id } });
+    const files = await prisma.folder.findMany({ where: { userId: req.user!.id } });
     res.render('home', {
       section: 'Folders',
       folder: null,
@@ -33,14 +33,14 @@ export const getFolder = async (req: Request, res: Response, next: NextFunction)
   try {
     const { folderId } = req.params;
     const folder = await prisma.folder.findFirst({
-      where: { id: Number(folderId), userId: req.user.id },
+      where: { id: Number(folderId), userId: req.user!.id },
     });
 
     if (!folder) {
       return res.status(404).render('unauthorised', { message: 'Folder not found' });
     }
     const files = await prisma.file.findMany({
-      where: { folderId: Number(folderId), userId: req.user.id },
+      where: { folderId: Number(folderId), userId: req.user!.id },
     });
 
     res.render('home', { folder: folder, files: files, download: true });
@@ -54,7 +54,7 @@ export const getUpdateFolder = async (req: Request, res: Response, next: NextFun
   try {
     const { folderId } = req.params;
     const folder = await prisma.folder.findFirst({
-      where: { id: Number(folderId), userId: req.user.id },
+      where: { id: Number(folderId), userId: req.user!.id },
     });
 
     if (!folder) {
@@ -71,7 +71,7 @@ export const getDeleteFolder = async (req: Request, res: Response, next: NextFun
   try {
     const { id } = req.params;
     const folder = await prisma.folder.findFirst({
-      where: { id: Number(id), userId: req.user.id },
+      where: { id: Number(id), userId: req.user!.id },
     });
     if (!folder) {
       return res.status(404).render('unauthorised', { message: 'Folder not found' });
@@ -91,7 +91,7 @@ export const postUpdateFolder = async (req: Request, res: Response, next: NextFu
     const folder = await prisma.folder.findFirst({
       where: {
         id: Number(folderId),
-        userId: req.user.id,
+        userId: req.user!.id,
       },
     });
 
@@ -117,7 +117,7 @@ export const postDeleteFolder = async (req: Request, res: Response, next: NextFu
     const { id } = req.params;
 
     const folder = await prisma.folder.findFirst({
-      where: { id: Number(id), userId: req.user.id },
+      where: { id: Number(id), userId: req.user!.id },
     });
 
     if (!folder) {
@@ -127,7 +127,7 @@ export const postDeleteFolder = async (req: Request, res: Response, next: NextFu
     const files = await prisma.file.findMany({
       where: {
         folderId: Number(id),
-        userId: req.user.id,
+        userId: req.user!.id,
       },
       select: {
         name: true,
@@ -145,7 +145,7 @@ export const postDeleteFolder = async (req: Request, res: Response, next: NextFu
     const deleteFiles = await prisma.file.deleteMany({
       where: {
         folderId: Number(id),
-        userId: req.user.id,
+        userId: req.user!.id,
       },
     });
 
@@ -174,7 +174,7 @@ export const postNewFolder = [
 
       // Check if folder already exists for that user
       const existingUserFolder = await prisma.folder.findFirst({
-        where: { name: foldername, userId: req.user.id },
+        where: { name: foldername, userId: req.user!.id },
       });
       if (existingUserFolder) {
         return res.status(400).render('new-folder', {
@@ -183,7 +183,7 @@ export const postNewFolder = [
       }
 
       // Insert new folder into DB
-      await prisma.folder.create({ data: { name: foldername, userId: req.user.id } });
+      await prisma.folder.create({ data: { name: foldername, userId: req.user!.id } });
       res.redirect('/home');
     } catch (err) {
       console.error(err);

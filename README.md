@@ -4,7 +4,7 @@ The Odin Project - NodeJS Course Project (4/8):
 
 A personal file storage app inspired by Google Drive.
 
-This application uses Express, PostgreSQL, Passport.js, Prisma ORM, multer, Supabase Cloud Storage, EJS, and bcyrptjs, and is deployed via Render and Supabase.
+This application uses TypeScript, Express, PostgreSQL, Passport.js, Prisma ORM, multer, Supabase Cloud Storage, EJS, and bcyrptjs, and is deployed via Render and Supabase.
 
 ## Features
 
@@ -21,6 +21,6 @@ This application uses Express, PostgreSQL, Passport.js, Prisma ORM, multer, Supa
 
 ## Links
 
-Live link:
+Live link: https://file-uploader-5jrp.onrender.com
 
 Assignment: https://www.theodinproject.com/lessons/nodejs-file-uploader

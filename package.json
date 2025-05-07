@@ -40,11 +40,14 @@
     "pg": "^8.15.6"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.1",
     "@types/express-ejs-layouts": "^2.5.4",
     "@types/express-session": "^1.18.1",
+    "@types/express-validator": "^2.20.33",
+    "@types/helmet": "^0.0.48",
     "@types/multer": "^1.4.12",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.15.14",
     "@types/passport": "^1.0.17",
     "@types/passport-local": "^1.0.38",
     "@types/pg": "^8.11.14",

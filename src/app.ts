@@ -1,4 +1,5 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 import path from 'path';
 import express from 'express';
 import { Request, Response, NextFunction } from 'express';
@@ -46,7 +47,7 @@ app.use(
 // Passport Authentication
 require('./config/passport');
 app.use(passport.session());
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.locals.user = req.user;
   //console.log(req.session);
   //console.log(req.user);
@@ -54,7 +55,7 @@ app.use((req, res, next) => {
 });
 
 // Folders
-app.use(async (req, res, next) => {
+app.use(async (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
     const folders = await prisma.folder.findMany({
       where: {
