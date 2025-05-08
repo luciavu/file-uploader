@@ -18,7 +18,7 @@ import { PrismaClient } from '@prisma/client';
 const app = express();
 
 app.use(helmet());
-app.set('views', path.join(__dirname, './views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.use(express.static('public'));
