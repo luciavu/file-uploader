@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { PrismaClient } from '@prisma/client/default';
+import { PrismaClient } from '@prisma/client';
 import supabase from '../lib/supabaseClient';
 
 const prisma = new PrismaClient();

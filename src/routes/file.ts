@@ -19,6 +19,7 @@ fileRouter.get('/upload', isAuth, getUploadFile);
 fileRouter.get('/delete/:id', isAuth, getDeleteFile);
 fileRouter.get('/details/:id', isAuth, getDetailsFile);
 fileRouter.get('/download/:id', isAuth, getDownloadFile);
+
 // Post Routes
 fileRouter.post('/upload', isAuth, upload.single('file'), postUploadFile);
 fileRouter.post('/delete/:id', isAuth, postDeleteFile);
