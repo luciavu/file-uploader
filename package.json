@@ -2,7 +2,7 @@
   "name": "file-uploader",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
