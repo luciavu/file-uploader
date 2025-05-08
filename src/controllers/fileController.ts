@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client/default';
 import supabase from '../lib/supabaseClient';
 
 const prisma = new PrismaClient();
@@ -97,7 +97,11 @@ export const postUploadFile = async (req: Request, res: Response, next: NextFunc
   }
 };
 
-export const postDeleteFile = async (req: Request, res: Response, next: NextFunction) => {
+export const postDeleteFile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const file = await prisma.file.findFirst({
