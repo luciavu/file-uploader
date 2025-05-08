@@ -65,15 +65,15 @@ export const getDownloadFile = async (req: Request, res: Response, next: NextFun
 export const postUploadFile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (!req.file || !req.body.folder) {
-      return res.status(400).send('No folder/file uploaded.');
+      res.status(400).render('unauthorised', { message: 'No file uploaded.' });
     }
 
-    const buffer = req.file.buffer;
-    const fileName = `${Date.now()}_${req.file.originalname}`;
+    const buffer = req.file!.buffer;
+    const fileName = `${Date.now()}_${req.file!.originalname}`;
 
     // Upload to Supabase
     const { data, error } = await supabase.storage.from('files').upload(fileName, buffer, {
-      contentType: req.file.mimetype,
+      contentType: req.file!.mimetype,
       upsert: false,
     });
 
@@ -83,9 +83,9 @@ export const postUploadFile = async (req: Request, res: Response, next: NextFunc
     const file = await prisma.file.create({
       data: {
         name: fileName,
-        originalName: req.file.originalname,
+        originalName: req.file!.originalname,
         owner: req.user!.username,
-        size: req.file.size,
+        size: req.file!.size,
         folderId: Number(req.body.folder),
         userId: req.user!.id,
       },
